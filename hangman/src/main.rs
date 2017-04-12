@@ -146,7 +146,7 @@ fn read_guess() -> Option<char>
     guess.trim().chars().nth(0)
 }
 
-fn get_random_line() -> Result<String, io::Error>
+fn get_random_line() -> io::Result<String>
 {
     let f = try!(File::open("input.txt"));
     let file = BufReader::new(&f);
