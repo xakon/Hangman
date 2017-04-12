@@ -164,7 +164,7 @@ fn check_user_guess(gd: &GameData, user_guess: char) -> UserInputStatus
     UserInputStatus::LetterGuessed
 }
 
-fn update_screen(gd: &GameData, secret_line: &String)
+fn update_screen(gd: &GameData, secret_line: &str)
 {
     clear();
     println!("HANGMAN: CAN YOU GUESS THE SENTENCE?");
