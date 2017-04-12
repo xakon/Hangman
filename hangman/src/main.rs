@@ -26,16 +26,22 @@ enum UserInputStatus {
     LetterMissed,
 }
 
+impl GameData {
+    fn new(secret: &str, lives: i32) -> GameData {
+        GameData {
+            lives: lives,
+            secret_line: secret.to_string(),
+            discovered_letters: String::new(),
+            status: String::new(),
+        }
+    }
+}
+
 fn main()
 {
     let random_line = get_random_line().expect("Failed to read input data!");
 
-    let mut gd : GameData = GameData {
-                        secret_line        : random_line,
-                        discovered_letters : String::new(),
-                        lives              : 5,
-                        status             : String::new()
-                        };
+    let mut gd : GameData = GameData::new(&random_line, 5);
 
     let mut secret_line_masked = format_masked_string(&gd.secret_line, &gd.discovered_letters);
 
