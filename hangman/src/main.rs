@@ -81,7 +81,12 @@ fn main()
         println!("Type your guess:");
         let user_guess = read_guess();
 
-        if validate_user_guess(user_guess)
+        if !validate_user_guess(user_guess)
+        {
+            let status = format!("It is not a letter!");
+            gd.status = Yellow.paint(status).to_string();
+        }
+        else
         {
             let guess_lower = user_guess.unwrap().to_lowercase().next().unwrap();
 
@@ -127,11 +132,6 @@ fn main()
                     gd.status = Yellow.paint(status).to_string();
                 }
             }
-        }
-        else
-        {
-            let status = format!("It is not a letter!");
-            gd.status = Yellow.paint(status).to_string();
         }
     }
 }
