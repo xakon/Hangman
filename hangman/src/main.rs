@@ -142,7 +142,7 @@ fn validate_user_guess(user_guess: Option<char>) -> bool
             guess.is_alphabetic()
         }
 
-        None => { return false; }
+        None => { false }
     }
 }
 
