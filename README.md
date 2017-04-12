@@ -11,7 +11,7 @@ I used the way from this repo: https://github.com/davidbegin/clear-terminal
 
 ### The sentence base
 
-The sentences are taken from hangman\input.txt. You can add your own senteces to base. The sentence must be in newline and cannot contain the punctuation marks.
+The sentences are taken from hangman\input.txt. You can add your own sentences to base. The sentence must be in newline and cannot contain the punctuation marks.
 
 ### Screenshot
 
