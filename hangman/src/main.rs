@@ -4,14 +4,11 @@ extern crate ansi_term;
 use std::process::Command;
 
 use std::io;
-use std::io::BufReader;
-use std::io::BufRead;
+use std::io::{BufReader, BufRead};
 use std::fs::File;
 use rand::{thread_rng, sample};
 
-use ansi_term::Colour::Red;
-use ansi_term::Colour::Green;
-use ansi_term::Colour::Yellow;
+use ansi_term::Colour::{Red, Green, Yellow};
 
 struct GameData {
     secret_line         : String,
