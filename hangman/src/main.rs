@@ -170,14 +170,14 @@ fn update_screen(gd: &GameData, secret_line: &str)
     clear();
     println!("HANGMAN: CAN YOU GUESS THE SENTENCE?");
     println!("Lives: {}. Discovered letters: {}", gd.lives, gd.discovered_letters);
-    print_hangman(&gd);
+    print_hangman(gd.lives);
     println!("{}", secret_line);
     println!("{}", gd.status);
 }
 
-fn print_hangman(gd: &GameData)
+fn print_hangman(lives: i32)
 {
-    match gd.lives
+    match lives
     {
         0 =>
         {
