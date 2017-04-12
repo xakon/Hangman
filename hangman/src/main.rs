@@ -35,6 +35,22 @@ impl GameData {
             status: String::new(),
         }
     }
+
+    fn format_masked_string(&self) -> String
+    {
+        let (input, mask) = (&self.secret_line, &self.discovered_letters);
+        let mut result : String = String::new();
+
+        for c in input.chars()
+        {
+            result.push(if c == ' ' {c}
+                else if mask.contains(c) {c}
+                else {'_'});
+            result.push(' ');
+        }
+
+        result
+    }
 }
 
 fn main()
@@ -43,7 +59,7 @@ fn main()
 
     let mut gd : GameData = GameData::new(&random_line, 5);
 
-    let mut secret_line_masked = format_masked_string(&gd.secret_line, &gd.discovered_letters);
+    let mut secret_line_masked = gd.format_masked_string();
 
     loop
     {
@@ -63,7 +79,7 @@ fn main()
                     gd.discovered_letters.push(guess_lower);
                     let status = format!("You discovered {}", guess_lower);
                     gd.status = Green.paint(status).to_string();
-                    secret_line_masked = format_masked_string(&gd.secret_line, &gd.discovered_letters);
+                    secret_line_masked = gd.format_masked_string();
 
                     if !secret_line_masked.contains('_')
                     {
@@ -81,7 +97,7 @@ fn main()
                     if gd.lives == 0
                     {
                         gd.status = Red.bold().paint("You lost!").to_string();
-                        secret_line_masked = format_masked_string(&gd.secret_line, &gd.secret_line);
+                        secret_line_masked = gd.format_masked_string();
                         update_screen(&gd, &secret_line_masked);
                         break;
                     }
@@ -122,21 +138,6 @@ fn get_random_line() -> Result<String, io::Error>
     let sample = sample(&mut rng, file.lines(), 1).pop().unwrap();
     let secret_line = sample.unwrap().to_lowercase();
     Ok(secret_line)
-}
-
-fn format_masked_string(input: &String, mask: &String) -> String
-{
-    let mut result : String = String::new();
-
-    for c in input.chars()
-    {
-        result.push(if c == ' ' {c}
-            else if mask.contains(c) {c}
-            else {'_'});
-        result.push(' ');
-    }
-
-    result
 }
 
 fn validate_user_guess(user_guess: Option<char>) -> bool
