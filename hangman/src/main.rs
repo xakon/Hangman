@@ -51,6 +51,22 @@ impl GameData {
 
         result
     }
+
+    fn check_user_guess(&self, user_guess: char) -> UserInputStatus
+    {
+        if self.discovered_letters.contains(user_guess)
+        {
+            return UserInputStatus::AlreadyDiscovered;
+        }
+
+        if !self.secret_line.contains(user_guess)
+        {
+            return UserInputStatus::LetterMissed;
+        }
+
+        UserInputStatus::LetterGuessed
+    }
+
 }
 
 fn main()
@@ -72,7 +88,7 @@ fn main()
         {
             let guess_lower = user_guess.unwrap().to_lowercase().next().unwrap();
 
-            match check_user_guess(&gd, guess_lower)
+            match gd.check_user_guess(guess_lower)
             {
                 UserInputStatus::LetterGuessed =>
                 {
@@ -147,21 +163,6 @@ fn validate_user_guess(user_guess: Option<char>) -> bool
         Some(guess)	=> guess.is_alphabetic(),
         None		=> false,
     }
-}
-
-fn check_user_guess(gd: &GameData, user_guess: char) -> UserInputStatus
-{
-    if gd.discovered_letters.contains(user_guess)
-    {
-        return UserInputStatus::AlreadyDiscovered;
-    }
-
-    if !gd.secret_line.contains(user_guess)
-    {
-        return UserInputStatus::LetterMissed;
-    }
-
-    UserInputStatus::LetterGuessed
 }
 
 fn update_screen(gd: &GameData, secret_line: &str)
