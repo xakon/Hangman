@@ -139,8 +139,7 @@ fn validate_user_guess(user_guess: Option<char>) -> bool
     {
         Some(guess) =>
         {
-            if !guess.is_alphabetic() { false }
-            else { true }
+            guess.is_alphabetic()
         }
 
         None => { return false; }
