@@ -128,7 +128,7 @@ fn format_masked_string(input: &String, mask: &String) -> String
 {
     let mut result : String = String::new();
 
-    for (u, c) in input.chars().enumerate()
+    for c in input.chars()
     {
         result.push(if c == ' ' {c}
             else if mask.contains(c) {c}
