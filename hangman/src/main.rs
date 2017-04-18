@@ -68,7 +68,7 @@ impl GameData {
 
 fn main()
 {
-    let random_line = get_random_line().expect("Failed to read input data!");
+    let random_line = get_random_line("input.txt").expect("Failed to read input data!");
 
     let mut gd : GameData = GameData::new(&random_line, 5);
 
@@ -142,9 +142,9 @@ fn read_guess() -> Option<char>
     guess.trim().chars().nth(0)
 }
 
-fn get_random_line() -> io::Result<String>
+fn get_random_line(filename: &str) -> io::Result<String>
 {
-    let f = try!(File::open("input.txt"));
+    let f = try!(File::open(filename));
     let file = BufReader::new(&f);
     let mut rng = thread_rng();
     let sample = sample(&mut rng, file.lines(), 1).pop().unwrap();
