@@ -64,6 +64,10 @@ impl GameData {
         UserInputStatus::LetterGuessed
     }
 
+    fn end_of_game(&self, masked_string: &str) -> bool {
+        self.lives == 0 || !masked_string.contains('_')
+    }
+
 }
 
 fn main()
@@ -88,19 +92,8 @@ fn main()
             continue;
         }
 
-        if !secret_line_masked.contains('_')
-        {
-            gd.status = Green.bold().paint("You won!").to_string();
-            update_screen(&gd, &secret_line_masked);
-            break;
-        }
-
-        if gd.lives == 0
-        {
-            gd.status = Red.bold().paint("You lost!").to_string();
-            secret_line_masked = gd.format_masked_string();
-            update_screen(&gd, &secret_line_masked);
-            break;
+        if gd.end_of_game(&secret_line_masked) {
+            break
         }
 
         let guess_lower = user_guess.unwrap().to_lowercase().next().unwrap();
@@ -134,6 +127,15 @@ fn main()
             }
         }
     }
+
+    if gd.lives == 0 {
+        gd.status = Red.bold().paint("You lost!").to_string();
+        secret_line_masked = gd.format_masked_string();
+    }
+    else {
+        gd.status = Green.bold().paint("You won!").to_string();
+    }
+    update_screen(&gd, &secret_line_masked);
 }
 
 fn read_guess() -> Option<char>
