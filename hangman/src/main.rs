@@ -88,6 +88,21 @@ fn main()
             continue;
         }
 
+        if !secret_line_masked.contains('_')
+        {
+            gd.status = Green.bold().paint("You won!").to_string();
+            update_screen(&gd, &secret_line_masked);
+            break;
+        }
+
+        if gd.lives == 0
+        {
+            gd.status = Red.bold().paint("You lost!").to_string();
+            secret_line_masked = gd.format_masked_string();
+            update_screen(&gd, &secret_line_masked);
+            break;
+        }
+
         let guess_lower = user_guess.unwrap().to_lowercase().next().unwrap();
 
         match gd.check_user_guess(guess_lower)
@@ -98,13 +113,6 @@ fn main()
                 let status = format!("You discovered {}", guess_lower);
                 gd.status = Green.paint(status).to_string();
                 secret_line_masked = gd.format_masked_string();
-
-                if !secret_line_masked.contains('_')
-                {
-                    gd.status = Green.bold().paint("You won!").to_string();
-                    update_screen(&gd, &secret_line_masked);
-                    break;
-                }
             }
 
             UserInputStatus::LetterMissed =>
@@ -112,14 +120,7 @@ fn main()
                 gd.discovered_letters.push(guess_lower);
                 gd.lives = gd.lives - 1;
 
-                if gd.lives == 0
-                {
-                    gd.status = Red.bold().paint("You lost!").to_string();
-                    secret_line_masked = gd.format_masked_string();
-                    update_screen(&gd, &secret_line_masked);
-                    break;
-                }
-                else
+                if gd.lives > 0
                 {
                     let status = format!("Unfortunately, no {}", guess_lower);
                     gd.status = Red.paint(status).to_string();
