@@ -78,6 +78,8 @@ fn main()
 
     let mut secret_line_masked = gd.format_masked_string();
 
+    // TODO: simplify this loop
+    // TODO: maybe it's better to check for win/loss at the beginning of the loop
     loop
     {
         update_screen(&gd, &secret_line_masked);
@@ -128,6 +130,7 @@ fn main()
         }
     }
 
+    // TODO: move declaration of secret_line_masked here
     if gd.lives == 0 {
         gd.status = Red.bold().paint("You lost!").to_string();
         secret_line_masked = gd.format_masked_string();
@@ -145,6 +148,7 @@ fn read_guess() -> Option<char>
     guess.trim().chars().nth(0)
 }
 
+// TODO: check what will happen on an empty file.
 fn get_random_line(filename: &str) -> io::Result<String>
 {
     let f = try!(File::open(filename));
@@ -247,6 +251,7 @@ fn print_hangman(lives: i32)
     }
 }
 
+// TODO: send  to STDOUT
 fn clear()
 {
   let output = Command::new("clear").output().unwrap_or_else(|e|{
